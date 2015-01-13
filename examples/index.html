@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8"/>
+  <title>Demo</title>
+</head>
+
+<body>
+<div id="container">
+  <!-- CONTENT HERE -->
+</div>
+
+<script src="seajs/sea.js"></script>
+<script src="config.js"></script>
+<script>
+  seajs.use('index', function (Ajax) {
+    'use strict';
+    Ajax({
+      url: './data.json'
+    }).on('done', function (data) {
+      console.log(data);
+    }).on('not-allowed',function( xhr, errorType, error){
+
+    }).on('error',function( xhr, errorType, error){
+
+    });
+  });
+</script>
+</body>
+
+</html>
