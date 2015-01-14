@@ -14,5 +14,16 @@ $ spm install nd-ajax --save
 
 ```js
 var Ajax = require('nd-ajax');
+
+ Ajax({
+      url: './data.json'
+    }).on('done', function (data) {
+      console.log(data);
+    }).on('not-allowed',function( xhr, errorType, error){
+
+    }).on('error',function( xhr, errorType, error){
+
+    });
+    
 // use Ajax
 ```
