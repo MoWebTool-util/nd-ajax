@@ -15,9 +15,20 @@ $ spm install nd-ajax --save
 ```js
 var Ajax = require('nd-ajax');
 
+//可选参数,可以配置默认的一些事件
+ var defaultEvents={
+      done:function(){
+       console.log('done');
+      },
+      'timeout':function(){
+        alert('timeout');
+      }
+    }
+
+
  Ajax({
       url: './data.json'
-    }).on('done', function (data) {
+    },defaultEvents).on('done', function (data) {
       console.log(data);
     }).on('not-allowed',function( xhr, errorType, error){
 

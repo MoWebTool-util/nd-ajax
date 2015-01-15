@@ -16,9 +16,17 @@
 <script>
   seajs.use('index', function (Ajax) {
     'use strict';
+    var defaultEvents={
+      done:function(){
+       console.log('done');
+      },
+      'timeout':function(){
+        alert('timeout');
+      }
+    }
     Ajax({
       url: './data.json'
-    }).on('done', function (data) {
+    },defaultEvents).on('done', function (data) {
       console.log(data);
     }).on('not-allowed',function( xhr, errorType, error){
 

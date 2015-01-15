@@ -14,19 +14,19 @@ var Events = require('nd-events');
 //默认的一些事件
 var defaultEvents = {
   'timeout': function () {
-    alert('对不起，访问超时了');
+    //alert('对不起，访问超时了');
   },
   'disconnect': function () {
-    alert('网络不给力，请检查网络');
+   // alert('网络不给力，请检查网络');
   },
   'not-allowed': function () {
-    alert('对不起，您没有权限访问');
+   // alert('对不起，您没有权限访问');
   },
   'no-permission': function () {
 
   },
   'not-found': function () {
-    alert('对不起，没有找到您要的东西');
+   // alert('对不起，没有找到您要的东西');
   },
   'error': function () {
 
@@ -41,9 +41,11 @@ function bindDefaultCallback(obj) {
 }
 
 //ajax中的默认的配置
-Ajax = function (options) {
+Ajax = function (options,settings) {
   var ajax = $.ajax(options);
   Events.mixTo(ajax);
+  settings=settings||{};
+  $.extend(defaultEvents,settings);
   bindDefaultCallback(ajax);
   ajax.done(function (data, status, xhr) {
     ajax.trigger('done', data, status, xhr);

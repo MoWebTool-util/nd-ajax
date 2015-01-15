@@ -1,6 +1,9 @@
 # History
 
 ---
+## 0.0.2
+
+- add custom eventsSettings.
 
 ## 0.0.1
 
