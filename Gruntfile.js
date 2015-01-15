@@ -36,7 +36,7 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.registerTask('test', ['jshint','exec:spm-test']);
+  grunt.registerTask('test', ['jshint', 'exec:spm-test']);
 
   grunt.registerTask('publish', ['test', 'exec:spm-publish']);
 
