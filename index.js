@@ -8,7 +8,6 @@
 
 var $ = require('jquery');
 var Base = require('nd-base');
-var Events = require('nd-events');
 
 var HTTP_STATUS_CODES = {
   /* 来自 HTTP 标准 与 API 文档 */
@@ -21,8 +20,6 @@ var HTTP_STATUS_CODES = {
 };
 
 var Ajax = module.exports = Base.extend({
-  Implements: Events,
-
   attrs: {
     settings: {
       type: 'GET',
