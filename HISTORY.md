@@ -1,7 +1,11 @@
 # History
 
 ---
-## 0.0.2
+##0.1.1
+
+- remove implements events
+
+## 0.1.0
 
 - add custom eventsSettings.
 
