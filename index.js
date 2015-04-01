@@ -8,61 +8,88 @@
 
 var $ = require('jquery');
 
-module.exports = function ajax(options) {
-  var url = [],
-    type = options.type,
-    data = options.data,
-    processData = true;
+module.exports = function(processor) {
 
-  // baseUri: Array
-  if (options.baseUri) {
-    url = url.concat(options.baseUri);
-  }
+  processor || (processor = function(data) {
+    return data;
+  });
 
-  // uri: id | null | undefined
-  if (options.uri !== null && options.uri !== undefined) {
-    url = url.concat(options.uri);
-  }
+  return function(options) {
+    var url = [],
+      type = options.type,
+      data = options.data,
+      processData = true;
 
-  // additional uris: Array
-  if (options.params) {
-    url = url.concat(options.params);
-  }
-
-  url = url.join('/');
-
-  // GET：data 为 queryString，需要 jQuery 处理
-  // OTR：data 为表单数据，手动转为 JSON string
-  if (data && typeof data === 'object' && /^POST|PATCH|PUT$/i.test(type)) {
-    data = JSON.stringify(data);
-    processData = false;
-  }
-
-  // TODO: 此处统一处理错误信息
-
-  var defer = $.Deferred();
-
-  $.ajax({
-    url: url,
-    type: type,
-    data: data,
-    processData: processData
-  })
-  .done(function(data) {
-    // TODO: 判断 成功 与 失败
-    if (options.done) {
-      options.done(defer, data);
-    } else {
-      defer.resolve(data);
+    // baseUri: Array
+    if (options.baseUri) {
+      url = url.concat(options.baseUri);
     }
-  })
-  .fail(function(xhr, status, error) {
-    if (options.fail) {
-      options.fail(defer, error);
-    } else {
-      defer.reject(error);
-    }
-  })/*.always(function() {})*/;
 
-  return defer;
+    // uri: id | null | undefined
+    if (options.uri !== null && options.uri !== undefined) {
+      url = url.concat(options.uri);
+    }
+
+    // additional uris: Array
+    if (options.params) {
+      url = url.concat(options.params);
+    }
+
+    url = url.join('/');
+
+    // MUST BE A JSON
+    if (data) {
+      if (/^POST|PATCH|PUT$/i.test(type)) {
+        data = JSON.stringify(data);
+        processData = false;
+      } else {
+        // GET
+        (function() {
+          var encode = window.encodeURIComponent,
+            paramUrl = [],
+            key;
+
+          for (key in data) {
+            if (data.hasOwnProperty(key)) {
+              paramUrl.push(encode(key) + '=' + encode(data[key]));
+            }
+          }
+
+          url += '?' + paramUrl.join('&');
+
+          // 防止 jQuery 自动拼接
+          data = null;
+        })();
+      }
+    }
+
+    var defer = $.Deferred();
+
+    $.ajax(
+      processor({
+        url: url,
+        type: type,
+        data: data,
+        processData: processData,
+        contentType: 'application/json'
+      })
+    )
+    .done(function(data) {
+      if (options.done) {
+        options.done(defer, data);
+      } else {
+        defer.resolve(data);
+      }
+    })
+    .fail(function(xhr, status, error) {
+      if (options.fail) {
+        options.fail(defer, error);
+      } else {
+        defer.reject(error);
+      }
+    });
+
+    return defer.promise();
+  };
+
 };
