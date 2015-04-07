@@ -74,16 +74,16 @@ module.exports = function(processor) {
         contentType: 'application/json'
       })
     )
-    .done(function(data) {
+    .done(function(data, status, xhr) {
       if (options.done) {
-        options.done(defer, data);
+        options.done(defer, data, xhr);
       } else {
         defer.resolve(data);
       }
     })
     .fail(function(xhr, status, error) {
       if (options.fail) {
-        options.fail(defer, error);
+        options.fail(defer, error, xhr);
       } else {
         defer.reject(error);
       }
