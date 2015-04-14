@@ -14,6 +14,20 @@ module.exports = function(processor) {
     return data;
   });
 
+  function addParam(url, params) {
+    var encode = window.encodeURIComponent,
+      arr = [],
+      key;
+
+    for (key in params) {
+      if (params.hasOwnProperty(key)) {
+        arr.push(encode(key) + '=' + encode(params[key]));
+      }
+    }
+
+    return url + (url.indexOf('?') !== -1 ? '&' : '?') + arr.join('&');
+  }
+
   return function(options) {
     var url = [],
       type = options.type,
@@ -37,6 +51,10 @@ module.exports = function(processor) {
 
     url = url.join('/');
 
+    if (options.additional) {
+      addParam(url, options.additional);
+    }
+
     // MUST BE A JSON
     if (data) {
       if (/^POST|PATCH|PUT$/i.test(type)) {
@@ -44,22 +62,9 @@ module.exports = function(processor) {
         processData = false;
       } else {
         // GET
-        (function() {
-          var encode = window.encodeURIComponent,
-            paramUrl = [],
-            key;
-
-          for (key in data) {
-            if (data.hasOwnProperty(key)) {
-              paramUrl.push(encode(key) + '=' + encode(data[key]));
-            }
-          }
-
-          url += '?' + paramUrl.join('&');
-
-          // 防止 jQuery 自动拼接
-          data = null;
-        })();
+        addParam(url, data);
+        // 防止 jQuery 自动拼接
+        data = null;
       }
     }
 
