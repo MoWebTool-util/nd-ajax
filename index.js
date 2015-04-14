@@ -52,7 +52,7 @@ module.exports = function(processor) {
     url = url.join('/');
 
     if (options.additional) {
-      addParam(url, options.additional);
+      url = addParam(url, options.additional);
     }
 
     // MUST BE A JSON
@@ -62,7 +62,7 @@ module.exports = function(processor) {
         processData = false;
       } else {
         // GET
-        addParam(url, data);
+        url = addParam(url, data);
         // 防止 jQuery 自动拼接
         data = null;
       }
