@@ -29,10 +29,11 @@ module.exports = function(processor) {
   }
 
   return function(options) {
-    var url = [],
-      type = options.type,
-      data = options.data,
-      processData = true;
+    var url = [];
+    var replacement = options.replacement;
+    var type = options.type;
+    var data = options.data;
+    var processData = true;
 
     // baseUri: Array
     if (options.baseUri) {
@@ -66,6 +67,13 @@ module.exports = function(processor) {
         // 防止 jQuery 自动拼接
         data = null;
       }
+    }
+
+    // 替换 URL 中的变量，如 {xxx}
+    if (replacement) {
+      Object.keys(replacement).forEach(function(key) {
+        url = url.replace(new RegExp('{' + key + '}', 'img'), replacement[key]);
+      });
     }
 
     var defer = $.Deferred();

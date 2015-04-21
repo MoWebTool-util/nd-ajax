@@ -1,7 +1,7 @@
 {
   "name": "nd-ajax",
   "version": "1.0.0",
-  "description": "简单的ajax封装",
+  "description": "简单的 AJAX 封装",
   "keywords": [],
   "homepage": "https://github.com/ndfront/nd-ajax",
   "author": {
@@ -20,7 +20,6 @@
     "grunt": "^0.4.5",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-exec": "^0.4.6",
-    "grunt-spm-server": "^0.0.4",
     "load-grunt-tasks": "^0.6.0"
   },
   "spm": {
