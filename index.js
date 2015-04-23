@@ -41,7 +41,7 @@ module.exports = function(processor) {
     }
 
     // uri: id | null | undefined
-    if (options.uri !== null && options.uri !== undefined) {
+    if (options.uri) {
       url = url.concat(options.uri);
     }
 
@@ -50,8 +50,9 @@ module.exports = function(processor) {
       url = url.concat(options.params);
     }
 
+    // remove empty values
     url = url.filter(function(val) {
-      return val !== '';
+      return !!val;
     });
 
     url = url.join('/');
