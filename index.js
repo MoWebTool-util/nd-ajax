@@ -50,6 +50,10 @@ module.exports = function(processor) {
       url = url.concat(options.params);
     }
 
+    url = url.filter(function(val) {
+      return val !== '';
+    });
+
     url = url.join('/');
 
     if (options.additional) {
