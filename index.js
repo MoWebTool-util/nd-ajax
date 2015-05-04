@@ -41,8 +41,8 @@ module.exports = function(processor) {
     }
 
     // uri: id | null | undefined
-    if (options.uri) {
-      url = url.concat(options.uri);
+    if (options.uri || options.uri === 0) {
+      url = url.concat('' + options.uri);
     }
 
     // additional uris: Array
