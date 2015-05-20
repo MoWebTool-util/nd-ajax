@@ -14,9 +14,10 @@ module.exports = function(processor) {
     return data;
   });
 
+  var encode = window.encodeURIComponent;
+
   function addParam(url, params) {
-    var encode = window.encodeURIComponent,
-      arr = [],
+    var arr = [],
       key;
 
     for (key in params) {
@@ -42,7 +43,7 @@ module.exports = function(processor) {
 
     // uri: id | null | undefined
     if (options.uri || options.uri === 0) {
-      url = url.concat('' + options.uri);
+      url = url.concat('' + encode(options.uri));
     }
 
     // additional uris: Array
