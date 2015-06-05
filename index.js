@@ -78,7 +78,7 @@ module.exports = function(processor) {
     // 替换 URL 中的变量，如 {xxx}
     if (replacement) {
       Object.keys(replacement).forEach(function(key) {
-        url = url.replace(new RegExp('{' + key + '}', 'img'), replacement[key]);
+        url = url.replace(new RegExp('{' + key + '}', 'img'), encode(replacement[key]));
       });
     }
 
