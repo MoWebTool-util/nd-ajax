@@ -1,16 +1,27 @@
 /**
- * Description: RESTful 的 ajax 封装
- * Author: crossjs <liwenfu@crossjs.com>
- * Date: 2015-03-17 12:14:01
+ * @module AJAX
+ * @author: crossjs <liwenfu@crossjs.com>
  */
 
 'use strict';
 
 var $ = require('jquery');
+var auth = require('nd-auth');
 
 module.exports = function(processor) {
 
   processor || (processor = function(data) {
+    var matched;
+
+    if (data.url && auth.isAuthed()) {
+      matched = data.url.match(/^(?:https?:)?\/\/([^\/]+)(\/.+)$/i);
+      data.headers = {
+        authorization: auth.getAuthentization(
+          data.type, matched[2], matched[1]
+        )
+      };
+    }
+
     return data;
   });
 

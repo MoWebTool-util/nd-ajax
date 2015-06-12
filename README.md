@@ -2,7 +2,7 @@
 
 [![spm version](http://spm.crossjs.com/badge/nd-ajax)](http://spm.crossjs.com/package/nd-ajax)
 
-> RESTful 的 ajax 封装
+> 带 Authentization 的 AJAX 封装
 
 ## 安装
 
