@@ -1,6 +1,7 @@
 /**
- * @module ajax
- * @author: crossjs <liwenfu@crossjs.com>
+ * Description: RESTful 的 ajax 封装
+ * Author: crossjs <liwenfu@crossjs.com>
+ * Date: 2015-03-17 12:14:01
  */
 
 'use strict';
@@ -30,7 +31,7 @@ module.exports = function(processor) {
   function addParam(url, params) {
     var arr = Object.keys(params).map(function(key) {
       return encode(key) + '=' + encode(params[key]);
-    });
+    }).join('&');
 
     if (!arr) {
       return url;
