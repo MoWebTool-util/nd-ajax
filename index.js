@@ -1,7 +1,6 @@
 /**
- * Description: RESTful 的 ajax 封装
- * Author: crossjs <liwenfu@crossjs.com>
- * Date: 2015-03-17 12:14:01
+ * @module ajax
+ * @author: crossjs <liwenfu@crossjs.com>
  */
 
 'use strict';
@@ -29,7 +28,7 @@ module.exports = function(processor) {
   var encode = window.encodeURIComponent;
 
   function addParam(url, params) {
-    var arr = Object.keys(params).forEach(function(key) {
+    var arr = Object.keys(params).map(function(key) {
       return encode(key) + '=' + encode(params[key]);
     });
 
