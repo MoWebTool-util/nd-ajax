@@ -37,7 +37,7 @@ module.exports = function(processor) {
       return url;
     }
 
-    return url + (url.indexOf('?') !== -1 ? '&' : '?') + arr.join('&');
+    return url + (url.indexOf('?') !== -1 ? '&' : '?') + arr;
   }
 
   return function(options) {
