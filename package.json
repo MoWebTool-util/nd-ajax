@@ -1,7 +1,7 @@
 {
   "name": "nd-ajax",
   "version": "1.0.0",
-  "description": "带 Authentization 的 AJAX 封装",
+  "description": "简单 AJAX 封装",
   "keywords": [],
   "homepage": "https://github.com/ndfront/nd-ajax",
   "author": {
@@ -20,8 +20,7 @@
   "spm": {
     "main": "index.js",
     "dependencies": {
-      "jquery": "1.11.1",
-      "nd-auth": "1.0.0"
+      "jquery": "1.11.1"
     },
     "devDependencies": {
       "expect.js": "0.3.1"

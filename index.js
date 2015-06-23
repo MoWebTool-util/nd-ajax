@@ -1,28 +1,15 @@
 /**
- * Description: RESTful 的 ajax 封装
- * Author: crossjs <liwenfu@crossjs.com>
- * Date: 2015-03-17 12:14:01
+ * @module ajax
+ * @author crossjs <liwenfu@crossjs.com>
  */
 
 'use strict';
 
 var $ = require('jquery');
-var auth = require('nd-auth');
 
 module.exports = function(processor) {
 
   processor || (processor = function(data) {
-    var matched;
-
-    if (data.url && auth.isAuthed()) {
-      matched = data.url.match(/^(?:https?:)?\/\/([^\/]+)(\/.+)$/i);
-      data.headers = {
-        authorization: auth.getAuthentization(
-          data.type, matched[2], matched[1]
-        )
-      };
-    }
-
     return data;
   });
 
@@ -42,10 +29,6 @@ module.exports = function(processor) {
 
   return function(options) {
     var url = [];
-    var replacement = options.replacement;
-    var type = options.type;
-    var data = options.data;
-    var processData = true;
 
     // baseUri: Array
     if (options.baseUri) {
@@ -73,6 +56,10 @@ module.exports = function(processor) {
       url = addParam(url, options.additional);
     }
 
+    var data = options.data;
+    var type = options.type;
+    var processData = true;
+
     // MUST BE A JSON
     if (data) {
       if (/^POST|PATCH|PUT$/i.test(type)) {
@@ -85,6 +72,8 @@ module.exports = function(processor) {
         data = null;
       }
     }
+
+    var replacement = options.replacement;
 
     // 替换 URL 中的变量，如 {xxx}
     if (replacement) {
