@@ -106,6 +106,13 @@ module.exports = function(processor) {
       } else {
         defer.reject(error);
       }
+    })
+    .always(function() {
+      if (options.always) {
+        options.always(defer);
+      } else {
+        defer.always();
+      }
     });
 
     return defer.promise();
